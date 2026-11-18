@@ -7,22 +7,30 @@ use App\Repository\GenreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: GenreRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups'=> ['genre:lire']],
+    denormalizationContext: ['groups'=> ['genre:ecrire']],
+)]
 class Genre
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['genre:lire'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255 , unique:true)]
+    #[Groups(['genre:lire','genre:ecrire','livre:lire'])]
     private ?string $nom = null;
 
     /**
      * @var Collection<int, Livre>
      */
+    #[Groups(['genre:lire','genre:ecrire','livre:lire'])]
+
     #[ORM\ManyToMany(targetEntity: Livre::class, mappedBy: 'genre')]
     private Collection $livres;
 

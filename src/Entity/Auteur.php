@@ -7,17 +7,24 @@ use App\Repository\AuteurRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: AuteurRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups'=> ['auteur:lire']],
+    denormalizationContext: ['groups'=> ['auteur:ecrire']],
+)]
 class Auteur
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['auteur:lire'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    
+    #[Groups(['auteur:lire','auteur:ecrire','livre:lire'])]
     private ?string $nom = null;
 
     /**
