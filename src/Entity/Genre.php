@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Contraints as Assert;
 
 #[ORM\Entity(repositoryClass: GenreRepository::class)]
 #[ApiResource(
@@ -24,6 +25,8 @@ class Genre
 
     #[ORM\Column(length: 255 , unique:true)]
     #[Groups(['genre:lire','genre:ecrire','livre:lire'])]
+    #[Assert\NotNull]
+    #[Assert\length(max: 255)]
     private ?string $nom = null;
 
     /**

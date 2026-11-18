@@ -46,6 +46,7 @@ class Livre
     #[ORM\ManyToOne(inversedBy: 'livres')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['livre:lire', 'lire:ecrire'])]
+    #[Assert\NotNull]
     private ?Auteur $auteur = null;
 
     /**
