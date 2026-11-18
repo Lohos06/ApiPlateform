@@ -26,7 +26,7 @@ class Livre
     #[ORM\Column(nullable: true)]
     private ?int $nbPages = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
+    #[ORM\Column(length: 50, unique:true, nullable: true)]
     private ?string $openLibraryId = null;
 
     #[ORM\ManyToOne(inversedBy: 'livres')]
